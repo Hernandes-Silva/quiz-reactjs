@@ -13,11 +13,16 @@ const Login: React.FC = (props: Props) => {
     return (
         <S.Container>
             <GlobalStyled/>
-            
-            <S.LogoDiv />
 
+            <S.LogoDiv />
+            <h1>LOGIN</h1>
             <S.InputArea>
                 <SignInput />
+
+                <SignInput />
+                <S.CustomButtom>
+                    LOGIN
+                </S.CustomButtom>
             </S.InputArea>
         </S.Container>
      

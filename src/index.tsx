@@ -4,13 +4,16 @@ import './index.css';
 
 import Login from './pages/SignIn';
 import reportWebVitals from './reportWebVitals';
+import GlobalStyled from './styles/global'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    <GlobalStyled/>
     <Login />
+    
   </React.StrictMode>
 );
 

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import logo from '../../assets/logo.gif';
 
 interface LogoSrc {
-    readonly src: string;
+  readonly src: string;
 }
 export const Container = styled.div`
     display:flex;
@@ -11,28 +11,33 @@ export const Container = styled.div`
     height:100vh;
     justify-content:center;
     align-items:center;
+    
 `;
 
 export const LogoDiv = styled.img.attrs<LogoSrc>({
   src: `${logo}`
 })`
    height:25%;
+   max-width:70%;
 `;
 
 export const InputArea = styled.div`
-  width:40%;
+  width:80%;
   margin-top: 2px;
+
+  @media (min-width: 768px) {
+    width:60%
+  }
+
+  @media (min-width: 1024px) {
+    width:40%
+  }
 `
-export const CustomButtom = styled.button`
-  height:50px;
-  width:100%;
-  border:0;
-  border-radius:30px;
+export const TextFotter = styled.p`
+  margin-top:5vh;
   text-align:center;
-  color:#EBF2FA;
-  background-color:#054056;
-  margin-top:10px;
+  span {
+    cursor: pointer;
+    font-weight:bold;
+  }
 `
-
-  
-

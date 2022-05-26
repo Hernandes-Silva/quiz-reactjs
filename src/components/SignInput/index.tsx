@@ -2,13 +2,18 @@
 import * as React from 'react';
 import * as S from './styles';
 type Props = {
+    icon?: string;
+    type?:string;
+    placeholder?:string;
+    value?:string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+const SignInput: React.FC<Props> = ({ icon, ...inputProps }) => {
     
-};
-
-const SignInput: React.FC = (props: Props) => {
     return (
         <S.InputArea >
-            <p>aaa</p>
+            {icon && <S.Icon src={icon}  />}
+            <S.Input {...inputProps} />
         </S.InputArea>
     );
 };

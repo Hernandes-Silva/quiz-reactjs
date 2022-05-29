@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Home from '../pages/Home'
 import SignIn  from '../pages/SignIn'
+import paths from './paths';
 type Props = {
     
 }
@@ -15,8 +16,8 @@ const AppRouter = (props: Props) => {
     return (
         <Router>
             <Routes>
-                <Route path='/login' element={<SignIn/>} />
-                <Route path='/' element={<Home/>} />
+                <Route path={paths.SIGNIN} element={<SignIn/>} />
+                <Route path={paths.HOME} element={<Home/>} />
             </Routes>
         </Router>
     );

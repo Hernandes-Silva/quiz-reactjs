@@ -4,6 +4,7 @@ import './index.css';
 
 import Login from './pages/SignIn';
 import reportWebVitals from './reportWebVitals';
+import AppRouter from './routes';
 import GlobalStyled from './styles/global'
 
 const root = ReactDOM.createRoot(
@@ -12,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <GlobalStyled/>
-    <Login />
+    <AppRouter />
     
   </React.StrictMode>
 );

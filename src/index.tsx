@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import AuthProvider from './contexts/authProvider';
 import './index.css';
+import { BrowserRouter } from 'react-router-dom'
 
-import Login from './pages/SignIn';
 import reportWebVitals from './reportWebVitals';
 import AppRouter from './routes';
 import GlobalStyled from './styles/global'
@@ -12,9 +13,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <GlobalStyled/>
-    <AppRouter />
-    
+    <GlobalStyled />
+    <BrowserRouter>
+      <AuthProvider>
+        <AppRouter />
+      </AuthProvider>
+    </BrowserRouter>
+
   </React.StrictMode>
 );
 

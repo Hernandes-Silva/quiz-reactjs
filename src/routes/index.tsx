@@ -14,12 +14,11 @@ type Props = {
 }
 const AppRouter = (props: Props) => {
     return (
-        <Router>
-            <Routes>
-                <Route path={paths.SIGNIN} element={<SignIn/>} />
-                <Route path={paths.HOME} element={<Home/>} />
-            </Routes>
-        </Router>
+        <Routes>
+            <Route path={paths.SIGNIN} element={<SignIn/>} />
+            <Route path={paths.HOME} element={<Home/>} />
+        </Routes>
+        
     );
 };
 

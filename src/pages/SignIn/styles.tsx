@@ -7,11 +7,9 @@ interface LogoSrc {
 export const Container = styled.div`
     display:flex;
     flex-direction:column;
-    background-color: #05668D;
     height:100vh;
     justify-content:center;
     align-items:center;
-    
 `;
 
 export const LogoDiv = styled.img.attrs<LogoSrc>({
@@ -40,4 +38,15 @@ export const TextFotter = styled.p`
     cursor: pointer;
     font-weight:bold;
   }
+`
+export const ContainerError = styled.div`
+   
+    background-color:#EBF2FA;
+    opacity:0.3;
+`
+export const LeftError = styled
+export const Error = styled.h4`
+  padding:5px;
+  text-align:center;
+  border-radius:10px;
 `

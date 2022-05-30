@@ -1,5 +1,5 @@
 const getRequestErrorMessage = (err: any): string => {
-
+    console.log(err)
     const message =
         err.response?.data?.detail ??
         err.message ??

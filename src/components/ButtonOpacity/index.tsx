@@ -4,6 +4,7 @@ import * as S from './styles'
 type Props = {
     children: React.ReactNode;
     onClick: () => void;
+    color?: string;
 };
 
 
@@ -11,7 +12,8 @@ export const ButtonOpacity = (props: Props) => {
     const [touched, touchedSet] = React.useState<boolean>(false)
 
     return (
-            <S.CustomButtom 
+            <S.CustomButtom
+            backgroundColor={props.color} 
             style={{ opacity: touched ? 0.5 : 1, transition: 'opacity 100ms ease' }}
             onMouseDown={() => touchedSet(true)}
             onMouseUp={() => touchedSet(false)}

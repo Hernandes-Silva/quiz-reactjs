@@ -12,6 +12,7 @@ export default createGlobalStyle`
         font-family: sans-serif;
         color:#EBF2FA;
         font-size: 24px !important;
+        background-color:#05668D;
 
         @media (min-width: 768px) {
             font-size: 18px !important;

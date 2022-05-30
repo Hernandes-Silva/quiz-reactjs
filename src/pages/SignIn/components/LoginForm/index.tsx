@@ -2,10 +2,11 @@
 import * as React from 'react';
 import ButtonOpacity from '../../../../components/ButtonOpacity';
 import SignInput from '../../../../components/SignInput';
-import * as S from '../../styles'
+import {Error } from '../../styles'
 import lock from '../../../../assets/lock.svg'
 import email from '../../../../assets/email.svg'
 import { useAuthContext } from '../../../../contexts/authProvider';
+import { InputArea } from '../../../../styles/styleds';
 
 type Props = {
 
@@ -25,17 +26,17 @@ export const LoginForm: React.FC = (props: Props) => {
         const e = await handleSignIn({username: usernameField, password:passwordField})
         
         if(!e) return
-        
+
         setError(e);
     }
 
     return (
-        <S.InputArea>
+        <InputArea>
 
             {error &&
-            <S.Error>
+            <Error>
                 {error}
-            </S.Error>
+            </Error>
             }
             <SignInput
                 icon={email}
@@ -55,6 +56,6 @@ export const LoginForm: React.FC = (props: Props) => {
             <ButtonOpacity onClick={login} >
                 LOGIN
             </ButtonOpacity>
-        </S.InputArea>
+        </InputArea>
     );
 };

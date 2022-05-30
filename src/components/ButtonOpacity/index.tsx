@@ -3,7 +3,8 @@ import * as React from 'react';
 import * as S from './styles'
 type Props = {
     children: React.ReactNode;
-    onClick: () => void;
+    onClick?: () => void;
+    type?: string;
     color?: string;
 };
 

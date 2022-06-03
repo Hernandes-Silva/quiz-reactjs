@@ -1,14 +1,12 @@
 // @flow 
-import * as React from 'react';
+import {FC} from 'react';
 import SignInput from '../../../../components/SignInput';
 import lock from '../../../../assets/lock.svg'
 import email from '../../../../assets/email.svg'
 import { InputArea } from '../../../../styles/styleds';
 import ButtonOpacity from '../../../../components/ButtonOpacity';
 import { SubmitHandler, useForm } from 'react-hook-form';
-type Props = {
 
-};
 type FormValues = {
     username: string;
     first_name: string;
@@ -18,7 +16,7 @@ type FormValues = {
     confirm_password: string;
     
 };
-export const SignUpForm: React.FC = (props: Props) => {
+export const SignUpForm: FC = () => {
     const { register, handleSubmit } = useForm<FormValues>()
 
 

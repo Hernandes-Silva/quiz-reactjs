@@ -1,16 +1,12 @@
 // @flow 
-import * as React from 'react';
+import {FC }from 'react';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../routes/paths';
 import { Container } from '../../styles/styleds';
 import { LoginForm } from './components/LoginForm';
 import * as S from './styles';
 
-type Props = {
-
-};
-
-const Login: React.FC = (props: Props) => {
+const Login: FC = () => {
     const navigate = useNavigate()
 
     return (

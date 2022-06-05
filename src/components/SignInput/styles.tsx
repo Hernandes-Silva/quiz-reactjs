@@ -10,12 +10,9 @@ export const InputArea = styled.div`
     border-radius:30px;
     padding-left:15px;
     padding-right:15px;
-    color:#054056;
     display:flex;
     align-items:center;
     margin-top:15px;
-
-    
 `
 export const Input = styled.input`
     flex:1;
@@ -32,7 +29,11 @@ export const Input = styled.input`
 
 export const Icon = styled.img`
     height:35%;
-    margin-right:5px
+    margin-right:5px;
+`
+export const ContainerError = styled.div`
+    padding-left:15px;
+    padding-right:15px;
 `
 
 

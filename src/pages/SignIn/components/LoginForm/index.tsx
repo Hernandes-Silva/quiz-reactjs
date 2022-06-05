@@ -9,15 +9,21 @@ import { useAuthContext } from '../../../../contexts/authProvider';
 import { InputArea } from '../../../../styles/styleds';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PropsDoSignIn } from '../../../../services/axios/modules/authentication/types';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup"
 
-type Props = {
+const schema = yup.object({
+    username: yup.string().min(6).required(),
+    password: yup.string().min(6).required(),
+}).required();
 
-};
-export const LoginForm: React.FC = (props: Props) => {
+export const LoginForm: React.FC = () => {
     
     const [error, setError] = React.useState<string>("");
     const { handleSignIn } = useAuthContext();
-    const {register, handleSubmit } = useForm<PropsDoSignIn>();
+    const {register, handleSubmit, formState: {errors} } = useForm<PropsDoSignIn>({
+        resolver: yupResolver(schema)
+      });
 
     const login: SubmitHandler<PropsDoSignIn> = async (data) => {
         
@@ -45,13 +51,15 @@ export const LoginForm: React.FC = (props: Props) => {
             <form onSubmit={handleSubmit(login)}>
                 <SignInput
                     icon={email}
-                    placeholder="Digite seu email"
+                    error={errors.username}
+                    placeholder="Username"
                     {...register("username")}
                 />
 
                 <SignInput
                     icon={lock}
                     type="password"
+                    error={errors.password}
                     placeholder="Digite sua senha"
                     {...register("password")}
                     

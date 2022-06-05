@@ -21,3 +21,8 @@ export const InputArea = styled.div`
     width:40%
   }
 `
+
+export const ErrorStyleds = styled.p`
+  color: #DC1637;
+  padding-top: 5px;
+`

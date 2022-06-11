@@ -1,5 +1,5 @@
 // @flow 
-import * as React from 'react';
+import {FC, useEffect, useState }from 'react';
 import ButtonOpacity from '../../../../components/ButtonOpacity';
 import SignInput from '../../../../components/SignInput';
 import { Error } from '../../styles'
@@ -17,13 +17,17 @@ const schema = yup.object({
     password: yup.string().min(6).required(),
 }).required();
 
-export const LoginForm: React.FC = () => {
+export const LoginForm: FC = () => {
     
-    const [error, setError] = React.useState<string>("");
-    const { handleSignIn } = useAuthContext();
+    const [error, setError] = useState<string>("");
+    const { handleSignIn, validateAuth } = useAuthContext();
     const {register, handleSubmit, formState: {errors} } = useForm<PropsDoSignIn>({
         resolver: yupResolver(schema)
-      });
+    });
+
+    useEffect(() => {
+        validateAuth();
+    }, [])
 
     const login: SubmitHandler<PropsDoSignIn> = async (data) => {
         

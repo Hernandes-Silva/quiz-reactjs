@@ -14,6 +14,7 @@ export default createGlobalStyle`
         font-size: 24px !important;
         background-color:#05668D;
 
+
         @media (min-width: 768px) {
             font-size: 18px !important;
         }

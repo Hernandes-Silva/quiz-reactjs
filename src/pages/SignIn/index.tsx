@@ -1,16 +1,16 @@
 // @flow 
-import {FC }from 'react';
+import {FC, useContext }from 'react';
 import { useNavigate } from 'react-router-dom';
 import paths from '../../routes/paths';
-import { Container } from '../../styles/styleds';
+
+import { ContainerGlobal } from '../../styles/styleds';
 import { LoginForm } from './components/LoginForm';
 import * as S from './styles';
 
 const Login: FC = () => {
     const navigate = useNavigate()
-
     return (
-        <Container>
+        <ContainerGlobal>
             <S.LogoDiv />
 
             <LoginForm />
@@ -21,7 +21,7 @@ const Login: FC = () => {
                  Cadastre-se
                 </span>
             </S.TextFotter>
-        </Container>
+        </ContainerGlobal>
 
 
     );

@@ -1,6 +1,6 @@
 // @flow 
 import * as React from 'react';
-import { Container } from '../../styles/styleds';
+import { ContainerGlobal } from '../../styles/styleds';
 import { SignUpForm } from './components/SignUpForm';
 import { Title } from './styles';
 type Props = {
@@ -8,11 +8,11 @@ type Props = {
 };
 export const SignUp: React.FC =  (props: Props) => {
     return (
-        <Container>
+        <ContainerGlobal>
             <Title>SIGN UP</Title>
             <SignUpForm />
 
-        </Container>
+        </ContainerGlobal>
     );
 };
 export default SignUp;

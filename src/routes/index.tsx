@@ -7,6 +7,7 @@ import {
     Link
 } from "react-router-dom";
 import Home from '../pages/Home'
+import Quiz from '../pages/Quiz';
 import SignIn  from '../pages/SignIn'
 import SignUp from '../pages/SignUp';
 import RequiredAuth from '../permissions/RequiredAuth';
@@ -21,6 +22,7 @@ const AppRouter = (props: Props) => {
             <Route path={paths.SIGNUP} element={<SignUp/>} />
             <Route element={<RequiredAuth />} >
                 <Route path={paths.HOME} element={<Home/>} />
+                <Route path={`${paths.QUIZ}:category_id/`} element={<Quiz/>} />
             </Route>
             
         </Routes>

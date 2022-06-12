@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import logo from '../../assets/logo.gif';
+import { whiteColor } from '../../styles/variables';
 
 interface LogoSrc {
   readonly src: string;
@@ -23,8 +24,7 @@ export const TextFotter = styled.p`
   }
 `
 export const ContainerError = styled.div`
-   
-    background-color:#EBF2FA;
+    background-color:${whiteColor};
     opacity:0.3;
 `
 export const LeftError = styled

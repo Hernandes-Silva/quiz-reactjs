@@ -3,32 +3,38 @@ import { FC, useEffect, useState } from 'react';
 import ButtonOpacity from '../../components/ButtonOpacity';
 import { listCategories } from '../../services/Api';
 import { getCredentials } from '../../utils/cookies/credentials';
-import { CategoryText, Cei, Container, ContainerCategories, Title, TitleStyled } from './styles';
+import { CategoryText, Container, ContainerBody, ContainerCategories, ContainerRanking, Title, TitleStyled } from './styles';
+import {  Link} from "react-router-dom";
+import paths from '../../routes/paths';
 
-type Props = {
-
-};
-const Home: FC = (props: Props) => {
+const Home: FC = (props) => {
     const [textBollean, setTextBollean] = useState<boolean>(false)
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
         const myRequest = async () => {
             const { data } = await listCategories();
-            console.log(data)
             setCategories(data);
         }
         myRequest();
     }, [])
     return (
         <Container>
-            <ContainerCategories >
-                <Title>Categories:</Title>
-                <hr/>
-                {categories && categories.map((category: any, index:number) => {
-                    return <CategoryText key={index}>{category.name}</CategoryText>;
-                })}
-            </ContainerCategories>
+            <ContainerBody>
+                <ContainerCategories >
+                    <Title>Categories: </Title>
+                    <hr />
+                    {categories && categories.map((category: any, index: number) => {
+                        return <CategoryText key={index}>
+                            <Link to={`${paths.QUIZ}${category.id}/`}>{category.name}</Link>
+                            
+                            </CategoryText>;
+                    })}
+                </ContainerCategories>
+                <ContainerRanking>
+                    alou
+                </ContainerRanking>
+            </ContainerBody>
         </Container>
     );
 };

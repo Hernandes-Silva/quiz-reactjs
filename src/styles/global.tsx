@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { primaryColor } from "./variables";
 //Mobile com 24px, Tablet com 18px e Web com 16px.
 
 export default createGlobalStyle`
@@ -11,8 +12,8 @@ export default createGlobalStyle`
     body {
         font-family: sans-serif;
         color:#EBF2FA;
-        font-size: 24px !important;
-        background-color:#05668D;
+        font-size: 15px !important;
+        background-color:${primaryColor};
 
 
         @media (min-width: 768px) {

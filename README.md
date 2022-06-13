@@ -1,6 +1,6 @@
 <h1 align="center">Quiz django</h1>
 
-<p >Esse quiz foi feito com a intenção de aprender react js em conjunto com typescript. Nele não foquei muito no designer, mas sim na organização das pastas, nas permissões do react-router-dom, no service pattern, na validação com react-hook-form, nos context e na utilização do styled components.
+<p >Esse quiz foi feito com a intenção de aprender react js em conjunto com typescript. Nele foquei principalmente no aprendizado da organização das pastas, nas permissões do react-router-dom, no service pattern, na validação com react-hook-form, nos context e na utilização do styled components.
 </p>
 
 <p align="center">
@@ -15,8 +15,11 @@
 
 
 <p align="center">
- <img src="https://github.com/Hernandes-Silva/desafio--django/blob/master/github/postman.png" height='70%' width='70%'>
- 
+ <img src="https://github.com/Hernandes-Silva/quiz-reactjs/blob/main/github/gif1.gif" height='70%' width='70%'>
+</p>
+
+<p align="center">
+ <img src="https://github.com/Hernandes-Silva/quiz-reactjs/blob/main/github/gif2.gif" height='70%' width='70%'>
 </p>
 
 ## Features

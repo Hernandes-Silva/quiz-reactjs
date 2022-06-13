@@ -15,15 +15,14 @@ import SignIn from '../pages/SignIn'
 import SignUp from '../pages/SignUp';
 import RequiredAuth from '../permissions/RequiredAuth';
 import paths from './paths';
-type Props = {
 
-}
 const Container = styled.div`
     display:flex;
     min-height: 100vh;
     flex-direction:column;
 `
-const AppRouter = (props: Props) => {
+
+const AppRouter = () => {
     const {isLogged} = useAuthContext()
     return (
         <Container>

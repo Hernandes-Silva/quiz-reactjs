@@ -26,12 +26,13 @@ export const ContainerBodyGlobal= styled.div`
   padding-right:50px;
   border-radius:30px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
   @media (min-width: 768px) {
-    width:90%
+    width:90%;
   }
 
   @media (min-width: 1024px) {
-    width:80%
+    width:80%;
   }
 `
 export const InputArea = styled.div`

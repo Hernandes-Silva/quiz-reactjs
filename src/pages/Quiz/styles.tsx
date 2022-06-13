@@ -7,6 +7,7 @@ export const Container = styled.div`
     background-color:${backgroundLightColor};
     align-items:center;
     flex-direction:column;
+    
 `
 export const ContainerQuiz = styled.div`
     display:flex;

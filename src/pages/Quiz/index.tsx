@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ButtonOpacity from '../../components/ButtonOpacity';
 import { ItemChoice } from '../../components/ItemChoice';
 import { finishQuiz, questionsCategory } from '../../services/Api';
-import { ContainerBodyGlobal, ErrorStyleds, TextSecondary } from '../../styles/styleds';
+import { ContainerBodyGlobal, ErrorStyleds, TextSecondary, TitleGlobal } from '../../styles/styleds';
 import { Container, ContainerQuiz } from './styles';
 import * as yup from "yup"
 import { PostFinishQuiz } from '../../services/axios/modules/posts/types';
@@ -20,7 +20,7 @@ const schema = yup.object({
                 question_id: yup.number().integer(),
                 user_answer: yup.string(),
             })
-        ).min(10,"you need to answer all the questions").required()
+        ).min(10, "you need to answer all the questions").required()
 })
 
 type Props = {
@@ -34,7 +34,9 @@ export type PropsQuestion = {
 export const Quiz: FC = () => {
     const { category_id } = useParams();
     const [questions, setQuestions] = useState([])
-    const [answerQuestions, setAnswerQuestions] = useState({})
+    const [finished, setFinished] = useState(false)
+    const [score, setScore] = useState(false)
+    const [rank, setRank] = useState(false)
     const navigate = useNavigate()
     const { setValue, control, handleSubmit, getValues, formState: { errors } } = useForm<PostFinishQuiz>(
         {
@@ -52,7 +54,7 @@ export const Quiz: FC = () => {
     }, [category_id])
 
     const handleChecked = async (data: PropsQuestion) => {
-        const afterQuestions =  getValues("questions") || [];
+        const afterQuestions = getValues("questions") || [];
         for (var i = 0; i < afterQuestions.length; i++) {
             if (afterQuestions[i].question_id === data.question_id) {
                 setValue(`questions.${i}`, data)
@@ -64,13 +66,12 @@ export const Quiz: FC = () => {
 
     const finish = async (data: PostFinishQuiz) => {
         data.category = category_id;
-        try{
+        try {
             const response = await finishQuiz(data);
-            alert(`Finish success \n 
-                score:${response.data.score} \n 
-                ranking global:${response.data.ranking}`)
-            navigate(paths.HOME)
-        }catch(e){
+            setScore(response.data.score)
+            setRank(response.data.ranking)
+            setFinished(true)
+        } catch (e) {
             const message = getRequestErrorMessage(e)
             alert(message);
         }
@@ -80,7 +81,7 @@ export const Quiz: FC = () => {
         <Container>
             <ContainerBodyGlobal>
 
-                <ContainerQuiz>
+                {!finished && <ContainerQuiz>
 
                     {questions.length ? questions.map((question: any) => {
                         return <ItemChoice
@@ -88,18 +89,25 @@ export const Quiz: FC = () => {
                             key={question.id}
                             question={question}
                         />
-                    }): <TextSecondary>category is empty</TextSecondary>}
+                    }) : <TextSecondary>category is empty</TextSecondary>}
                     <ErrorStyleds>
                         {/* @ts-ignore */}
                         {errors.questions?.message}
                     </ErrorStyleds>
-                    
+
                     {questions.length && <ButtonOpacity onClick={handleSubmit(finish)}>Finish</ButtonOpacity>}
                     {!questions.length && <ButtonOpacity onClick={() => navigate(paths.HOME)}>Home</ButtonOpacity>}
                 </ContainerQuiz>
+                }
+
+                {finished && <ContainerQuiz>
+                    <TitleGlobal>Quiz finished</TitleGlobal>
+                    <TextSecondary>Score: {score}</TextSecondary>
+                    <TextSecondary>Ranking Global: {rank}</TextSecondary>
+                    <ButtonOpacity onClick={() => navigate(paths.HOME)}>Home</ButtonOpacity>
+                </ContainerQuiz>}
 
             </ContainerBodyGlobal>
-
         </Container>
     );
 };

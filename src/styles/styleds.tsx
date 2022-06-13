@@ -57,3 +57,6 @@ export const TextSecondary = styled.p`
 export const ShadowLight = styled.div`
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 `
+export const TitleGlobal = styled.h1`
+    color:${secondaryColor};
+`

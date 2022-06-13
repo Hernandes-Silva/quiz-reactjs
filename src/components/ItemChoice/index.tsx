@@ -1,9 +1,8 @@
 // @flow 
 import { FC, useState } from 'react';
-import { Title } from '../../pages/Home/styles';
 import { PropsQuestion } from '../../pages/Quiz';
 import { TextSecondary } from '../../styles/styleds';
-import { Container, ContainerButton, ContainerText } from './styles';
+import { Container, ContainerButton, ContainerText, Title } from './styles';
 type Props = {
     question: {
         id: number

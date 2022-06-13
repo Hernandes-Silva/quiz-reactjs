@@ -1,9 +1,10 @@
 import styled from "styled-components";
+import { backgroundLightColor, secondaryColor } from "../../styles/variables";
 
 export const Container = styled.div`
     display:flex;
-    background:linear-gradient(#043f57,transparent);
-    background-color:#05668D;
+    background:linear-gradient(${secondaryColor},transparent);
+    background-color:${backgroundLightColor};
     align-items:center;
     flex-direction:column;
 `

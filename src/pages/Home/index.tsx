@@ -77,7 +77,7 @@ const Home: FC = (props) => {
             
                 <ContainerRanking>
                     <Title>Ranking Global</Title>
-                    <hr />
+                    
                     <ContainerDataTable>
                         {rankingGlobal &&
                             <DataTable

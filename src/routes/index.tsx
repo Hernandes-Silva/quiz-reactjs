@@ -6,28 +6,41 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import styled from 'styled-components';
+import { NavBar } from '../components/NavBar';
+import { useAuthContext } from '../contexts/authProvider';
 import Home from '../pages/Home'
 import Quiz from '../pages/Quiz';
-import SignIn  from '../pages/SignIn'
+import SignIn from '../pages/SignIn'
 import SignUp from '../pages/SignUp';
 import RequiredAuth from '../permissions/RequiredAuth';
 import paths from './paths';
 type Props = {
-    
+
 }
+const Container = styled.div`
+    display:flex;
+    min-height: 100vh;
+    flex-direction:column;
+`
 const AppRouter = (props: Props) => {
+    const {isLogged} = useAuthContext()
     return (
-        <Routes>
-            <Route path={paths.SIGNIN} element={<SignIn/>} />
-            <Route path={paths.SIGNUP} element={<SignUp/>} />
-            <Route element={<RequiredAuth />} >
-                <Route path={paths.HOME} element={<Home/>} />
-                <Route path={`${paths.QUIZ}:category_id/`} element={<Quiz/>} />
-            </Route>
-            
-        </Routes>
-        
+        <Container>
+            {isLogged && <NavBar />}
+            <Routes>
+                <Route path={paths.SIGNIN} element={<SignIn />} />
+                <Route path={paths.SIGNUP} element={<SignUp />} />
+                <Route element={<RequiredAuth />} >
+                    <Route path={paths.HOME} element={<Home />} />
+                    <Route path={`${paths.QUIZ}:category_id/`} element={<Quiz />} />
+                </Route>
+
+            </Routes>
+        </Container>
+
     );
 };
+
 
 export default AppRouter;

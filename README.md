@@ -1,5 +1,9 @@
 <h1 align="center">Quiz django</h1>
 
+<p>
+🚧  Em construção, falta construir a área administrativa para criar questões e categorias 🚧
+</p>
+
 <p >Esse quiz foi feito com a intenção de aprender react js em conjunto com typescript. Nele foquei principalmente no aprendizado da organização das pastas, nas permissões do react-router-dom, no service pattern, na validação com react-hook-form, nos context e na utilização do styled components.
 </p>
 

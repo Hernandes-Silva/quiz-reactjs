@@ -19,7 +19,6 @@ apiAxios.interceptors.request.use(async req => {
                 const { data } = await axios.post(`${baseUrl}token/refresh/`, { refresh: credentials.refresh })
                 token = data.access;
                 var refresh = credentials.refresh || "";
-                console.log("aquii")
                 setCrendentials({ access: token, refresh: refresh })
             } catch (e) {
                 handleSignOut();

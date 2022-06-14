@@ -9,11 +9,6 @@ import paths from '../../routes/paths';
 import { TextSecondary } from '../../styles/styleds';
 import DataTable from 'react-data-table-component';
 
-type PropsUserRank = {
-    score_t: number
-    user: number
-    user__first_name: string
-}
 const columns = [
     {
         name: 'Rank',
@@ -35,11 +30,10 @@ const columns = [
     },
     
 ];
-const Home: FC = (props) => {
+const Home: FC = () => {
     const [textBollean, setTextBollean] = useState<boolean>(false)
     const [categories, setCategories] = useState([]);
     const [rankingGlobal, setRankingGlobal] = useState([])
-
     useEffect(() => {
         const myRequest = async () => {
             const { data } = await listCategories();

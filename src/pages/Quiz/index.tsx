@@ -47,7 +47,6 @@ export const Quiz: FC = () => {
     useEffect(() => {
         const myRequest = async () => {
             const { data } = await questionsCategory(category_id);
-            console.log(data)
             setQuestions(data)
         }
         myRequest();

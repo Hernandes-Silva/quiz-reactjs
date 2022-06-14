@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { primaryColor, secondaryColor, secondaryWhiteColor, whiteColor } from "./variables";
+import { backgroundLightColor, primaryColor, secondaryColor, secondaryWhiteColor, whiteColor } from "./variables";
 
 
 export const ContainerGlobal = styled.div`
@@ -11,7 +11,13 @@ export const ContainerGlobal = styled.div`
     justify-content:center;
     align-items:center;
 `;
-export const ContainerBodyGlobal= styled.div`
+export const ContainerLightGlobal = styled.div`
+  flex:1;
+  display:flex;
+  background:linear-gradient(${secondaryColor},transparent);
+  background-color:${backgroundLightColor};
+`
+export const ContainerBodyGlobal = styled.div`
   background:linear-gradient(${secondaryWhiteColor},transparent);
   background-color:${whiteColor};
   flex-direction:row;

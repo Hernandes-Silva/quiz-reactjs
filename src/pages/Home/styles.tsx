@@ -7,12 +7,9 @@ export const TitleStyled = styled.h1`
 `
 export const Container = styled.div`
     display:flex;
-    background:linear-gradient(${secondaryColor},transparent);
-    background-color:${backgroundLightColor};;
     flex-direction:row;
-    display:flex;
-    flex:1;
     padding-right:10px;
+    flex:1;
 `
 
 export const ContainerRanking = styled.div`

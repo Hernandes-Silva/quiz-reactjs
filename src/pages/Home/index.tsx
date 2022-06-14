@@ -6,7 +6,7 @@ import { getCredentials } from '../../utils/cookies/credentials';
 import { CategoryText, Container, ContainerCategories, ContainerDataTable, ContainerRanking, Title, TitleStyled } from './styles';
 import { Link } from "react-router-dom";
 import paths from '../../routes/paths';
-import { TextSecondary } from '../../styles/styleds';
+import { ContainerLightGlobal, TextSecondary } from '../../styles/styleds';
 import DataTable from 'react-data-table-component';
 
 const columns = [
@@ -16,8 +16,8 @@ const columns = [
         sortable: true,
         style: {
             fontSize: 18,
-            fontWeigth:'bold'
-          },
+            fontWeigth: 'bold'
+        },
     },
     {
         name: 'Score',
@@ -28,12 +28,13 @@ const columns = [
         selector: (row: any) => row.user__first_name,
         sortable: true,
     },
-    
+
 ];
 const Home: FC = () => {
     const [textBollean, setTextBollean] = useState<boolean>(false)
     const [categories, setCategories] = useState([]);
     const [rankingGlobal, setRankingGlobal] = useState([])
+    
     useEffect(() => {
         const myRequest = async () => {
             const { data } = await listCategories();
@@ -45,8 +46,8 @@ const Home: FC = () => {
     useEffect(() => {
         const ranking = async () => {
             const { data } = await listRankingGlobal();
-            const newDate = data.map((item:any, index:number)=>{
-                item.rank = index+1;
+            const newDate = data.map((item: any, index: number) => {
+                item.rank = index + 1;
                 return item
             })
             setRankingGlobal(data);
@@ -55,8 +56,8 @@ const Home: FC = () => {
     }, [])
 
     return (
-        <Container>
-            
+        <ContainerLightGlobal>
+            <Container>
                 <ContainerCategories >
                     <Title>Categories: </Title>
                     <hr />
@@ -67,11 +68,11 @@ const Home: FC = () => {
                         </CategoryText>;
                     })}
                 </ContainerCategories>
-           
-            
+
+
                 <ContainerRanking>
                     <Title>Ranking Global</Title>
-                    
+
                     <ContainerDataTable>
                         {rankingGlobal &&
                             <DataTable
@@ -83,8 +84,9 @@ const Home: FC = () => {
                         }
                     </ContainerDataTable>
                 </ContainerRanking>
-            
-        </Container>
+
+            </Container>
+        </ContainerLightGlobal>
     );
 };
 

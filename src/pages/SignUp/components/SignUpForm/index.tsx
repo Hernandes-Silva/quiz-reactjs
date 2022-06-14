@@ -29,7 +29,7 @@ export const SignUpForm: FC = () => {
 
 
     const signUp: SubmitHandler<PropsDoSignUp> = async (data) => {
-        console.log(await handleSignUp(data));
+        await handleSignUp(data)
     }
     return (
         <InputArea>

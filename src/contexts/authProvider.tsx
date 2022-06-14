@@ -2,14 +2,16 @@ import Cookies from "js-cookie";
 import { createContext, FC, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import paths from "../routes/paths";
-import { doSignIn, doSignUp } from "../services/axios/modules/authentication/repository";
+import { doSignIn, doSignUp, getUser } from "../services/axios/modules/authentication/repository";
 import { PropsDoSignIn, PropsDoSignUp } from "../services/axios/modules/authentication/types";
 import { getCredentials, setCrendentials } from "../utils/cookies/credentials";
 import getRequestErrorMessage from "../utils/getRequestErrorMessage";
+import { PropsUser } from "./types";
 
 
 interface InterfaceAuthContext {
-    
+    user: PropsUser | null
+    isAdmin: boolean
     isLogged: boolean
     handleSignOut: () => void
     handleSignUp: (userData: PropsDoSignUp) => Promise<string>
@@ -34,19 +36,33 @@ type Props = {
 const AuthProvider: FC <Props>=({children}) =>{
     const navigate = useNavigate();
     const [isLogged, setIsLogged] = useState(false)
+    const [user, setUser] = useState(null)
+    const [isAdmin,setIsAdmin] = useState(false)
 
     const handleSignIn = async (userData: PropsDoSignIn) => {
         try {
             const { data } = await doSignIn(userData)
-            console.log(data)
             setCrendentials(data)
             setIsLogged(true)
-            navigate(paths.HOME)
-            return "success"
         } catch (err) {
             const message =  getRequestErrorMessage(err);
             return message;
         }
+
+        // get user and isAdmin?
+        try{
+            const {data} = await getUser();
+            setUser(data)
+            if (data.groups.some((e:any) => e.name === "admin_quiz")) {
+               setIsAdmin(true)
+            }
+        }catch(err){
+            handleSignOut();
+            return ""
+        }
+
+        navigate(paths.HOME)
+        return "success"
 
     }
     const handleSignUp = async (userData: PropsDoSignUp) =>{
@@ -63,10 +79,10 @@ const AuthProvider: FC <Props>=({children}) =>{
 
     const validateAuth = () => {
         const credentials = getCredentials();
-        console.log(credentials)
         if(!credentials.token && !credentials.refresh){
             setIsLogged(false)
-            
+            setUser(null)
+            isAdmin && setIsAdmin(false)
             navigate(paths.SIGNIN)
         }else{
             setIsLogged(true)
@@ -77,11 +93,13 @@ const AuthProvider: FC <Props>=({children}) =>{
     return (
         <AuthContext.Provider 
             value={{
+                user,
                 handleSignIn,
                 handleSignUp,
                 handleSignOut,
                 validateAuth,
-                isLogged
+                isLogged,
+                isAdmin,
             }}
         >
             {children}

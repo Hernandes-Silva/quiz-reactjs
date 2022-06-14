@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import paths from "../routes/paths";
 import { doSignIn, doSignUp, getUser } from "../services/axios/modules/authentication/repository";
@@ -16,7 +16,7 @@ interface InterfaceAuthContext {
     handleSignOut: () => void
     handleSignUp: (userData: PropsDoSignUp) => Promise<string>
     handleSignIn: (userData: PropsDoSignIn) => Promise<string>
-    validateAuth: () => void
+    validateAuth: () => Promise<boolean>
 }
 
 export const AuthContext = createContext<InterfaceAuthContext>({} as InterfaceAuthContext)
@@ -33,65 +33,69 @@ type Props = {
     children: React.ReactNode;
 };
 
-const AuthProvider: FC <Props>=({children}) =>{
+const AuthProvider: FC<Props> = ({ children }) => {
     const navigate = useNavigate();
     const [isLogged, setIsLogged] = useState(false)
     const [user, setUser] = useState(null)
-    const [isAdmin,setIsAdmin] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    useEffect(()=>{
+        validateAuth();
+        
+    },[])
 
     const handleSignIn = async (userData: PropsDoSignIn) => {
         try {
             const { data } = await doSignIn(userData)
             setCrendentials(data)
-            setIsLogged(true)
         } catch (err) {
-            const message =  getRequestErrorMessage(err);
+            const message = getRequestErrorMessage(err);
             return message;
         }
 
-        // get user and isAdmin?
-        try{
-            const {data} = await getUser();
-            setUser(data)
-            if (data.groups.some((e:any) => e.name === "admin_quiz")) {
-               setIsAdmin(true)
-            }
-        }catch(err){
-            handleSignOut();
-            return ""
-        }
+        await validateAuth()
 
-        navigate(paths.HOME)
         return "success"
 
     }
-    const handleSignUp = async (userData: PropsDoSignUp) =>{
-        try{
+    const handleSignUp = async (userData: PropsDoSignUp) => {
+        try {
             await doSignUp(userData);
             navigate(paths.SIGNIN)
             alert("User created successfully")
             return "success"
         } catch (err) {
-            const message =  getRequestErrorMessage(err);
+            const message = getRequestErrorMessage(err);
             return message;
         }
     }
 
-    const validateAuth = () => {
+    const validateAuth = async () => {
         const credentials = getCredentials();
-        if(!credentials.token && !credentials.refresh){
+
+        if (!credentials.token && !credentials.refresh) {
             setIsLogged(false)
             setUser(null)
             isAdmin && setIsAdmin(false)
-            navigate(paths.SIGNIN)
-        }else{
+            return false
+        } else {
             setIsLogged(true)
-            navigate(paths.HOME)
+
+            try {
+                const { data } = await getUser();
+                setUser(data)
+                if (data.groups.some((e: any) => e.name === "admin_quiz")) {
+                    setIsAdmin(true)
+                }
+            } catch (err) {
+                handleSignOut();
+            }
+            
+            return true
         }
-        
     }
     return (
-        <AuthContext.Provider 
+        <AuthContext.Provider
             value={{
                 user,
                 handleSignIn,

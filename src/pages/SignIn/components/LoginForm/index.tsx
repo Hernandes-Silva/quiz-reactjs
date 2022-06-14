@@ -20,13 +20,15 @@ const schema = yup.object({
 export const LoginForm: FC = () => {
     
     const [error, setError] = useState<string>("");
-    const { handleSignIn, validateAuth } = useAuthContext();
+    const { handleSignIn, validateAuth, isLogged } = useAuthContext();
     const {register, handleSubmit, formState: {errors} } = useForm<PropsDoSignIn>({
         resolver: yupResolver(schema)
     });
 
     useEffect(() => {
-        validateAuth();
+        if(isLogged){
+            validateAuth();
+        }
     }, [])
 
     const login: SubmitHandler<PropsDoSignIn> = async (data) => {

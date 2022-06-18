@@ -2,7 +2,7 @@
 import { FC, useEffect, useState } from 'react';
 import ButtonOpacity from '../../components/ButtonOpacity';
 import { listCategories, listRankingGlobal } from '../../services/Api';
-import { getCredentials } from '../../utils/cookies/credentials';
+import { getTokenAndRefreshToken } from '../../utils/cookies/credentials';
 import { CategoryText, Container, ContainerCategories, ContainerDataTable, ContainerRanking, Title, TitleStyled } from './styles';
 import { Link } from "react-router-dom";
 import paths from '../../routes/paths';
@@ -31,7 +31,6 @@ const columns = [
 
 ];
 const Home: FC = () => {
-    const [textBollean, setTextBollean] = useState<boolean>(false)
     const [categories, setCategories] = useState([]);
     const [rankingGlobal, setRankingGlobal] = useState([])
     

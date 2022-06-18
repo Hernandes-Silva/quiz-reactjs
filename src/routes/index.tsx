@@ -28,7 +28,7 @@ const AppRouter = () => {
     const { isLogged } = useAuthContext()
     return (
         <Container>
-            {isLogged && <NavBar />}
+            {isLogged() && <NavBar />}
             <Routes>
                 <Route path={paths.SIGNIN} element={<SignIn />} />
                 <Route path={paths.SIGNUP} element={<SignUp />} />

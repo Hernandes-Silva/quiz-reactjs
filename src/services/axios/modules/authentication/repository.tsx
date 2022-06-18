@@ -15,5 +15,5 @@ export const doSignUp = (data: PropsDoSignUp) =>
         }
 })
 
-export const getUser = async () => 
+export const getAuthenticatedUser = async () => 
     await apiAxios.get("user/")

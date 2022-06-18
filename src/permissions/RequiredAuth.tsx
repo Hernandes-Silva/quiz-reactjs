@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuthContext } from "../contexts/authProvider";
 import paths from "../routes/paths";
-import { getCredentials } from "../utils/cookies/credentials";
+import { getTokenAndRefreshToken } from "../utils/cookies/credentials";
 
 const RequiredAuth = () => {
     const { isLogged } = useAuthContext();
     const  location  = useLocation();
 
     return (
-        isLogged ?
+        isLogged() ?
             <Outlet /> :
             <Navigate to={paths.SIGNIN} state={{ from: location }} replace />
     )

@@ -6,7 +6,7 @@ const RequiredAdmin = () => {
     const { isAdmin } = useAuthContext();
 
     return (
-        isAdmin ?
+        isAdmin() ?
             <Outlet /> :
             <Navigate to={paths.HOME} />
     )

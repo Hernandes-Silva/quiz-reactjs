@@ -13,6 +13,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup"
 import { useLocation, useNavigate } from 'react-router-dom';
 import paths from '../../../../routes/paths';
+import getRequestErrorMessage from '../../../../utils/getRequestErrorMessage';
 
 const schema = yup.object({
     username: yup.string().min(6).required(),
@@ -26,7 +27,7 @@ type LocationProps = {
 export const LoginForm: FC = () => {
     
     const [error, setError] = useState<string>("");
-    const { handleSignIn, validateAuth, isLogged } = useAuthContext();
+    const { handleSignIn, isLogged, validateAuth } = useAuthContext();
 
     const navigate = useNavigate()
     const location = useLocation() as unknown as LocationProps;
@@ -37,30 +38,22 @@ export const LoginForm: FC = () => {
 
     useEffect(() => {
         const verifyLogin = async() =>{
-            if(isLogged){
-               const logged = await validateAuth();
-               if(logged) navigate(from)
+            await validateAuth()
+            if(isLogged()){
+                navigate(from)
             }
         }
         verifyLogin()
     }, [])
 
     const login: SubmitHandler<PropsDoSignIn> = async (data) => {
-        
-        setError('')
-        if (!data.username || !data.password) {
-            setError('Username or password cannot be empty')
-            return
-        }
-        
-        const message = await handleSignIn(data)
-
-        if (message === "success"){
+        try{
+            await handleSignIn(data)
             navigate(from)
-            return
-        } 
-
-        setError(message);
+        } catch (err) {
+            const message = getRequestErrorMessage(err);
+            setError(message);
+        }
     }
 
     return (

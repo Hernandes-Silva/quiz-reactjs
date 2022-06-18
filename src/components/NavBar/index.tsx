@@ -14,7 +14,7 @@ export const NavBar = (props: Props) => {
         <Container>
             <h1 onClick={() => navigate(paths.HOME)}>Quiz</h1>
             <ContainerLinks>
-                {isAdmin && <NavLink to={paths.ADMIN}>Admin</NavLink>}
+                {isAdmin() && <NavLink to={paths.ADMIN}>Admin</NavLink>}
                 <NavLink to={paths.HOME}>Home </NavLink>
                 <a onClick={() => handleSignOut()}>Logout</a>
             </ContainerLinks>

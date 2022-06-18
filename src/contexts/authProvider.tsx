@@ -2,21 +2,21 @@ import Cookies from "js-cookie";
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import paths from "../routes/paths";
-import { doSignIn, doSignUp, getUser } from "../services/axios/modules/authentication/repository";
+import { doSignIn, doSignUp, getAuthenticatedUser } from "../services/axios/modules/authentication/repository";
 import { PropsDoSignIn, PropsDoSignUp } from "../services/axios/modules/authentication/types";
-import { getCredentials, setCrendentials } from "../utils/cookies/credentials";
+import { getTokenAndRefreshToken, setTokenAndRefreshToken } from "../utils/cookies/credentials";
 import getRequestErrorMessage from "../utils/getRequestErrorMessage";
 import { PropsUser } from "./types";
 
 
 interface InterfaceAuthContext {
-    user: PropsUser | null
-    isAdmin: boolean
-    isLogged: boolean
+    currentUser: PropsUser | null
+    isAdmin: () => boolean
+    isLogged: () => boolean
     handleSignOut: () => void
     handleSignUp: (userData: PropsDoSignUp) => Promise<string>
-    handleSignIn: (userData: PropsDoSignIn) => Promise<string>
-    validateAuth: () => Promise<boolean>
+    handleSignIn: (userData: PropsDoSignIn) => void
+    validateAuth: () => void
 }
 
 export const AuthContext = createContext<InterfaceAuthContext>({} as InterfaceAuthContext)
@@ -35,29 +35,47 @@ type Props = {
 
 const AuthProvider: FC<Props> = ({ children }) => {
     const navigate = useNavigate();
-    const [isLogged, setIsLogged] = useState(false)
-    const [user, setUser] = useState(null)
-    const [isAdmin, setIsAdmin] = useState(false)
+    const [currentUser, setCurrentUser] = useState<PropsUser | null>(null)
 
     useEffect(()=>{
         validateAuth();
-        
     },[])
 
-    const handleSignIn = async (userData: PropsDoSignIn) => {
-        try {
-            const { data } = await doSignIn(userData)
-            setCrendentials(data)
-        } catch (err) {
-            const message = getRequestErrorMessage(err);
-            return message;
+    const validateAuth = async () => {
+        if (!isLogged()){
+            setCurrentUser(null)
+            return 
         }
 
-        await validateAuth()
-
-        return "success"
-
+        try {
+            await fillCurrentUser()
+        } catch (err) {
+            handleSignOut();
+        }
     }
+    
+    const isLogged = () =>{
+        const credentials = getTokenAndRefreshToken();
+        return credentials.token && credentials.refresh? true: false
+    }
+
+    const fillCurrentUser = async() => {
+        const { data } = await getAuthenticatedUser();
+        setCurrentUser(data)
+    }
+
+    const handleSignIn = async (userData: PropsDoSignIn) => {
+            const { data } = await doSignIn(userData)
+            setTokenAndRefreshToken(data)
+            await fillCurrentUser()
+    }
+
+    const isAdmin = () =>{
+        if(currentUser?.groups.some((e: any) => e.name === "admin_quiz"))
+            return true
+        return false
+    }
+
     const handleSignUp = async (userData: PropsDoSignUp) => {
         try {
             await doSignUp(userData);
@@ -70,34 +88,10 @@ const AuthProvider: FC<Props> = ({ children }) => {
         }
     }
 
-    const validateAuth = async () => {
-        const credentials = getCredentials();
-
-        if (!credentials.token && !credentials.refresh) {
-            setIsLogged(false)
-            setUser(null)
-            isAdmin && setIsAdmin(false)
-            return false
-        } else {
-            setIsLogged(true)
-
-            try {
-                const { data } = await getUser();
-                setUser(data)
-                if (data.groups.some((e: any) => e.name === "admin_quiz")) {
-                    setIsAdmin(true)
-                }
-            } catch (err) {
-                handleSignOut();
-            }
-            
-            return true
-        }
-    }
     return (
         <AuthContext.Provider
             value={{
-                user,
+                currentUser,
                 handleSignIn,
                 handleSignUp,
                 handleSignOut,

@@ -27,9 +27,4 @@ export const ContainerError = styled.div`
     background-color:${whiteColor};
     opacity:0.3;
 `
-export const LeftError = styled
-export const Error = styled.h4`
-  padding:5px;
-  text-align:center;
-  border-radius:10px;
-`
+

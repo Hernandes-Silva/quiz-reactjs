@@ -7,7 +7,7 @@ import ButtonOpacity from '../../components/ButtonOpacity';
 import { ItemChoice } from '../../components/ItemChoice';
 import { finishQuiz, questionsCategory } from '../../services/Api';
 import { ContainerBodyGlobal, ErrorStyleds, TextSecondary, TitleGlobal } from '../../styles/styleds';
-import { Container, ContainerQuiz } from './styles';
+import { QuizContainer, BodyQuiz } from './styles';
 import * as yup from "yup"
 import { PostFinishQuiz } from '../../services/axios/modules/posts/types';
 import getRequestErrorMessage from '../../utils/getRequestErrorMessage';
@@ -23,9 +23,6 @@ const schema = yup.object({
         ).min(10, "you need to answer all the questions").required()
 })
 
-type Props = {
-    category_id: number
-};
 export type PropsQuestion = {
     question_id: number;
     user_answer: string;
@@ -33,7 +30,7 @@ export type PropsQuestion = {
 
 export const Quiz: FC = () => {
     const { category_id } = useParams();
-    const [questions, setQuestions] = useState([])
+    const [questionsResponse, setQuestionsResponse] = useState([])
     const [finished, setFinished] = useState(false)
     const [score, setScore] = useState(false)
     const [rank, setRank] = useState(false)
@@ -47,20 +44,31 @@ export const Quiz: FC = () => {
     useEffect(() => {
         const myRequest = async () => {
             const { data } = await questionsCategory(category_id);
-            setQuestions(data)
+            setQuestionsResponse(data)
         }
         myRequest();
     }, [category_id])
 
-    const handleChecked = async (data: PropsQuestion) => {
-        const afterQuestions = getValues("questions") || [];
-        for (var i = 0; i < afterQuestions.length; i++) {
-            if (afterQuestions[i].question_id === data.question_id) {
-                setValue(`questions.${i}`, data)
-                return
+    const handleChecked = async (newQuestionChecked: PropsQuestion) => {
+        const questionsChecked = getValues("questions") || [];
+
+        const FalseOrIndexQuestion = isQuestionAlreadyChecked(questionsChecked, newQuestionChecked)
+
+        if(FalseOrIndexQuestion !== false) {
+            setValue(`questions.${FalseOrIndexQuestion}`, newQuestionChecked)
+            return
+        }
+        
+        setValue("questions", [newQuestionChecked, ...questionsChecked])
+    }
+    
+    const isQuestionAlreadyChecked = (questionsChecked: any, newQuestion: PropsQuestion) =>{
+        for (var i = 0; i < questionsChecked.length; i++) {
+            if (newQuestion.question_id === questionsChecked[i].question_id ) {
+                return i
             }
         }
-        setValue("questions", [data, ...afterQuestions])
+        return false
     }
 
     const finish = async (data: PostFinishQuiz) => {
@@ -77,12 +85,12 @@ export const Quiz: FC = () => {
     }
 
     return (
-        <Container>
+        <QuizContainer>
             <ContainerBodyGlobal>
 
-                {!finished && <ContainerQuiz>
+                {!finished && <BodyQuiz>
 
-                    {questions.length ? questions.map((question: any) => {
+                    {questionsResponse.length ? questionsResponse.map((question: any) => {
                         return <ItemChoice
                             onChange={(data: PropsQuestion) => handleChecked(data)}
                             key={question.id}
@@ -94,20 +102,20 @@ export const Quiz: FC = () => {
                         {errors.questions?.message}
                     </ErrorStyleds>
 
-                    {questions.length && <ButtonOpacity onClick={handleSubmit(finish)}>Finish</ButtonOpacity>}
-                    {!questions.length && <ButtonOpacity onClick={() => navigate(paths.HOME)}>Home</ButtonOpacity>}
-                </ContainerQuiz>
+                    {questionsResponse.length && <ButtonOpacity onClick={handleSubmit(finish)}>Finish</ButtonOpacity>}
+                    {!questionsResponse.length && <ButtonOpacity onClick={() => navigate(paths.HOME)}>Home</ButtonOpacity>}
+                </BodyQuiz>
                 }
 
-                {finished && <ContainerQuiz>
+                {finished && <BodyQuiz>
                     <TitleGlobal>Quiz finished</TitleGlobal>
                     <TextSecondary>Score: {score}</TextSecondary>
                     <TextSecondary>Ranking Global: {rank}</TextSecondary>
                     <ButtonOpacity onClick={() => navigate(paths.HOME)}>Home</ButtonOpacity>
-                </ContainerQuiz>}
+                </BodyQuiz>}
 
             </ContainerBodyGlobal>
-        </Container>
+        </QuizContainer>
     );
 };
 

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { backgroundLightColor, secondaryColor } from "../../styles/variables";
 
-export const Container = styled.div`
+export const QuizContainer = styled.div`
     display:flex;
     background:linear-gradient(${secondaryColor},transparent);
     background-color:${backgroundLightColor};
@@ -9,7 +9,7 @@ export const Container = styled.div`
     flex-direction:column;
     
 `
-export const ContainerQuiz = styled.div`
+export const BodyQuiz = styled.div`
     display:flex;
     flex-direction:column;
     justify-content:center;

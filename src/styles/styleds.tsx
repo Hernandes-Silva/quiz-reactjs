@@ -57,6 +57,11 @@ export const ErrorStyleds = styled.p`
   color: #DC1637;
   padding-top: 5px;
 `
+export const ErrorLightGlobal  = styled.h4`
+    padding:5px;
+    text-align:center;
+    border-radius:10px;
+`
 export const TextSecondary = styled.p`
   color:${secondaryColor};
 `

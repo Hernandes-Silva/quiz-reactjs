@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import ButtonOpacity from '../../components/ButtonOpacity';
 import { listCategories, listRankingGlobal } from '../../services/Api';
 import { getTokenAndRefreshToken } from '../../utils/cookies/credentials';
-import { CategoryText, Container, ContainerCategories, ContainerDataTable, ContainerRanking, Title, TitleStyled } from './styles';
+import { CategoryText, HomeContainer, ContainerCategories, ContainerDataTable, ContainerRanking, Title, TitleStyled } from './styles';
 import { Link } from "react-router-dom";
 import paths from '../../routes/paths';
 import { ContainerLightGlobal, TextSecondary } from '../../styles/styleds';
@@ -45,10 +45,9 @@ const Home: FC = () => {
     useEffect(() => {
         const ranking = async () => {
             const { data } = await listRankingGlobal();
-            const newDate = data.map((item: any, index: number) => {
-                item.rank = index + 1;
-                return item
-            })
+            for(let rankPosition = 0; rankPosition < data.length; rankPosition++){
+                data[rankPosition].rank = rankPosition + 1;
+            }
             setRankingGlobal(data);
         }
         ranking();
@@ -56,7 +55,7 @@ const Home: FC = () => {
 
     return (
         <ContainerLightGlobal>
-            <Container>
+            <HomeContainer>
                 <ContainerCategories >
                     <Title>Categories: </Title>
                     <hr />
@@ -84,7 +83,7 @@ const Home: FC = () => {
                     </ContainerDataTable>
                 </ContainerRanking>
 
-            </Container>
+            </HomeContainer>
         </ContainerLightGlobal>
     );
 };

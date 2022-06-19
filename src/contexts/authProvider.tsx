@@ -14,7 +14,7 @@ interface InterfaceAuthContext {
     isAdmin: () => boolean
     isLogged: () => boolean
     handleSignOut: () => void
-    handleSignUp: (userData: PropsDoSignUp) => Promise<string>
+    handleSignUp: (userData: PropsDoSignUp) => void
     handleSignIn: (userData: PropsDoSignIn) => void
     validateAuth: () => void
 }
@@ -70,22 +70,14 @@ const AuthProvider: FC<Props> = ({ children }) => {
             await fillCurrentUser()
     }
 
-    const isAdmin = () =>{
+    const isAdmin = () => {
         if(currentUser?.groups.some((e: any) => e.name === "admin_quiz"))
             return true
         return false
     }
 
     const handleSignUp = async (userData: PropsDoSignUp) => {
-        try {
             await doSignUp(userData);
-            navigate(paths.SIGNIN)
-            alert("User created successfully")
-            return "success"
-        } catch (err) {
-            const message = getRequestErrorMessage(err);
-            return message;
-        }
     }
 
     return (

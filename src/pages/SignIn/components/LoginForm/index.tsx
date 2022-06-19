@@ -2,11 +2,10 @@
 import {FC, useEffect, useState }from 'react';
 import ButtonOpacity from '../../../../components/ButtonOpacity';
 import SignInput from '../../../../components/SignInput';
-import { Error } from '../../styles'
 import lock from '../../../../assets/lock.svg'
 import email from '../../../../assets/email.svg'
 import { useAuthContext } from '../../../../contexts/authProvider';
-import { InputArea } from '../../../../styles/styleds';
+import { ErrorLightGlobal, InputArea } from '../../../../styles/styleds';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { PropsDoSignIn } from '../../../../services/axios/modules/authentication/types';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -59,9 +58,9 @@ export const LoginForm: FC = () => {
     return (
         <InputArea>
             {error &&
-                <Error>
+                <ErrorLightGlobal>
                     {error}
-                </Error>
+                </ErrorLightGlobal>
             }
             
             <form onSubmit={handleSubmit(login)}>

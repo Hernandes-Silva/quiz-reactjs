@@ -5,7 +5,7 @@ import { backgroundLightColor, primaryColor, secondaryColor, secondaryWhiteColor
 export const TitleStyled = styled.h1`
     text-align:center;
 `
-export const Container = styled.div`
+export const HomeContainer = styled.div`
     display:flex;
     flex-direction:row;
     padding-right:10px;
